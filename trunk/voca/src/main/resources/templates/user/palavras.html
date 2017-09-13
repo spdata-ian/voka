@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPadrao">
+
+ <section layout:fragment="content">
+ 
+<input type="hidden" id="data-list" th:attr="data-list=@{/palavras/list}"/>
+<input type="hidden" id="data-remove" th:attr="data-remove=@{/palavras/remover}"/>
+<form th:action="@{/palavras}" th:object="${p}" method="post" enctype="multipart/form-data" id="form">
+
+<div class="alert alert-success alert-dismissible" role="alert" th:if="${erro != null and !erro}">
+   <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+    <span aria-hidden="true">&times;</span>
+   </button>
+      <strong id="sumary">Yeah!</strong><span id="text" style="margin-left: 5px">Palavra cadastrada!</span>
+  </div>
+
+  <div class="alert alert-danger alert-dismissible" role="alert" th:if="${erro!= null and erro}">
+   <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+    <span aria-hidden="true">&times;</span>
+   </button>
+   <div th:each="e : ${erros}">
+      <strong id="sumary">Ops...</strong><span id="text" style="margin-left: 5px" th:text="${e}"></span>
+   </div>
+  </div>
+
+  <div class="alert alert-warning alert-dismissible" role="alert" th:if="${tamanhoExcedido != null and tamanhoExcedido}">
+   <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+    <span aria-hidden="true">&times;</span>
+   </button>
+   <div>
+      <strong id="sumary">Tamanho da imagem excedida!</strong><span id="text" style="margin-left: 5px">O tamanho da imagem pode ser no máximo 100Kb</span>
+   </div>
+  </div>
+
+
+ 
+ <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Meu Vocabulário <small>Adicione palavras ou expressões ao seu vocabulário</small></h3>
+   </div>
+   <div class="panel-body">
+   
+   <div class="table-responsive">
+     <table id="minhasPalavras" class="table table-bordered js-datatable" style="width: 99%">
+      <thead>
+       <tr>
+        <td class="text-center col-md-1">#</td>
+        <td class="text-center ">Palavras</td>
+        <td class="text-center ">Tradução</td>
+        <td class="text-center col-md-1">Categoria</td>
+        <td class="text-center col-md-1">Idioma</td>
+        <td class="text-center col-md-1">Imagem</td>
+        <td class="text-center col-md-2">Ação</td>
+       </tr>
+      </thead>
+     </table>
+    </div>
+   
+    <div class="form-group">
+     <input id="id" type="hidden" th:field="*{id}"/>
+    
+      <label for="idioma">Idioma<span class="required"> *</span></label>
+      <select class="form-control" id="idioma" th:field="*{idioma}" required="required">
+         <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.idioma}"></option>
+      </select>
+      <p class="help-block">Selecione um idioma que vc já cadastrou na tela de Idiomas</p>
+    </div>
+    <div class="row">
+    <div class="form-group col-md-4">
+      <label for="palavra">Palavra ou Expressão<span class="required"> *</span></label>
+      <input type="text" class="form-control" id="palavra" placeholder="Palavra" th:field="*{palavra}" required="required"/>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="traducao">Tradução<span class="required"> *</span></label>
+      <input type="text" class="form-control" id="traducao" placeholder="Tradução" th:field="*{traducao}" required="required"/>
+    </div>
+     <div class="form-group col-md-4">
+      <label for="idioma">Categoria</label>
+      <select class="form-control" id="categoria" th:field="*{categoria}">
+         <option value=""></option>
+         <option th:each="i : ${categorias}" th:value="${i.id}" th:text="${i.categoria}"></option>
+      </select>
+    </div>
+    </div>
+    <div class="form-group">
+      <label for="imagem">Imagem (Tamanho máximo 100Kb)</label>
+      <input type="file" id="imagem" name="file" accept=".png, .jpg, .jpge"/>
+      <p class="help-block">Uma imagem pode te ajudar a associar a palavra mas não é obrigatória :)</p>
+    </div>
+    <button type="submit" class="btn btn-purple" id="btnSubmit">Salvar</button>
+   </div>
+  </div>
+ </div>
+ 
+  </form>
+</section>
+
+<section layout:fragment="js">
+ <script type="text/javascript" th:src="@{/js/palavras.js}"></script>
+</section>
+</html>

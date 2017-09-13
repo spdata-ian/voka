@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:th="http://www.thymeleaf.org"
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorator="layoutPadrao">
+<section layout:fragment="content">
+
+<input type="hidden" id="dataSom" th:attr="data-som=@{/praticar/som}"/>
+<input type="hidden" id="dataFinalizar" th:attr="data-finalizar=@{/praticar/finalizar}"/>
+<input type="hidden" id="dataPraticar" th:attr="data-praticar=@{/praticar}"/>
+<input type="hidden" id="dataOuvir" th:attr="data-ouvir=@{/praticar/ouvir}"/>
+<audio id="audio">
+<source type="audio/mp3" />
+</audio>
+<div class="col-sm-8 col-sm-offset-2">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 style="text-align: center;"><img th:src="@{${'/img/flags/' + idioma.id + '.png'}}" class="img-thumbnail" style="width: 45px; height: 35px;text-align: center;" th:text=" ' ' + ${idioma.idioma}"/></h3>
+	  </div>
+<div class="panel-body">
+  <div id="rootwizard">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+     <ul>
+      <li th:each="i : ${palavras}" th:attr="data-id=${i.getId()}"><a th:href="${i.getTab()}" data-toggle="tab"></a></li>
+      <li data-id="-1"><a href="#tab-1" data-toggle="tab" ></a></li>
+    </ul>
+     </div>
+      </div>
+    </div>
+    <div id="bar" class="progress">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;background-color: #765acc;"></div>
+    </div>
+ <div class="tab-content">
+
+      <div th:each="i : ${palavras}" th:attr="id='tab' + ${i.getId()}" class="tab-pane">
+           <div class="row">
+             <div class="col-md-6 col-sm-offset-3">
+               <div class="thumbnail">
+                <h3 style="text-align: center;" th:if="${trd}"><span>Traduza: </span><span style="color:#765acc" th:text="${i.getTraducao()}"></span></h3>
+                <h3 th:unless="${trd}" style="text-align: center;"><span> Traduza a imagem abaixo?</span></h3>
+                 <img th:src="*{'data:image/png;base64,'+i.getImamgeBas64()}" alt="..." style="cursor: pointer;" th:onclick="'ouvir(\'' + ${i.getPalavra()} + '\',\'' + ${idioma.id} + '\')'"/>
+                 <div class="caption" style="text-align: center;">
+                   <p>
+                    <input class="form-control" th:id="${i.getId()}" onkeypress="validar(event)" placeholder="Clique na imagem para ouvir"/>
+                    <input class="form-control" type="hidden" th:value="${i.getPalavra()}" th:attr="data-palavra=${i.getId()}"/>
+                    <input class="form-control" type="hidden" th:value="${i.traducao}" th:attr="data-id=${i.getId()}"/>
+                   </p>
+                 </div>
+             <div class="alert" role="alert" th:attr="data-msg=${i.getId()}" style="display: none">
+              <strong th:attr="data-strong=${i.getId()}"></strong><span th:attr="data-span=${i.getId()}"></span>
+            </div>
+               </div>
+             </div>
+         </div>
+         </div>
+         <div class="tab-pane" id="tab-1">
+
+       <h1 style="text-align: center;">Você chegou ao fim!</h1>
+       <div class="row" style="margin-top: 33px; padding-bottom: 50px;">
+        <div class="col-md-4">
+         <h4 style="text-align: center; color: #765acc;">Palavras praticadas</h4>
+         <h3 style="text-align: center; color: #765acc;" id="totalPalavras"></h3>
+        </div>
+        <div class="col-md-4">
+         <h4 style="text-align: center; color: #5fcc5a;">Acertos</h4>
+         <h3 style="text-align: center; color: #5fcc5a;" id="totalAcertos"></h3>
+        </div>
+        <div class="col-md-4">
+         <h4 style="text-align: center; color: #fd1b1b;">Erros</h4>
+         <h3 style="text-align: center; color: #fd1b1b;" id="totalErros"></h3>
+        </div>
+       </div>
+
+      </div>
+  <ul class="pager wizard">
+   <li class="next"><button  class="btn btn-lg btn-purple" id="verificar">Verificar</button></li>
+   <li class="finish"><button  class="btn btn-lg btn-purple" id="finalizar">Salvar Progresso</button></li>
+  </ul>
+ </div>
+</div>
+		</div>
+	</div>
+</div>
+</section>
+
+<section layout:fragment="js">
+ <script type="text/javascript" th:src="@{/js/executaPratica.js}"></script>
+</section>
+</html>

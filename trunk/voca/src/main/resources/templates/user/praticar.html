@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layoutPadrao">
+
+<section layout:fragment="content">
+ <input id="dataCategoria" type="hidden" th:attr="data-categoria=@{/praticar/categoriaPorIdioma}" />
+ <div class="alert alert-danger alert-dismissible" role="alert" th:if="${possuiPalavras != null and !possuiPalavras}">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+   <span aria-hidden="true">&times;</span>
+  </button>
+  <div>
+   <span id="text" style="margin-left: 5px">Você não tem palavras cadastradas para praticar.<a th:href="@{/palavras}"><strong style="color: #a94442"> Cadastrar Palavras</strong></a></span>
+  </div>
+ </div>
+
+
+ <!-- TODAS PALAVRAS -->
+
+ <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Todas as palavras</h3>
+   </div>
+   <div class="panel-body">
+    <form th:action="@{/praticar/todas}" method="get">
+     <div class="form-group col-md-8">
+      <label for="idioma">Idioma</label> <select id="idioma" class="form-control" name="idiomaA">
+       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+      </select>
+      <!--      <p class="help-block">Com a opção de <strong>Exibir Tradução</strong> desmarcada as palavras que não tiverem imagens será exibida a tradução.</p> -->
+     </div>
+     <div class="form-group col-md-2" style="margin-top: 30px;">
+      <label for="et">Exibir Tradução</label> <input type="checkbox" id="et" name="exibirTraducao" checked="checked" />
+     </div>
+     <div class="col-md-2">
+      <button th:if="${possuiPalavras}" class="btn btn-purple" style="margin-top: 24px;" type="submit">Praticar</button>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+
+ <!-- PALAVRAS ERRADAS -->
+
+ <div class="col-md-8 col-md-offset-2" th:if="${not #lists.isEmpty(idiomasPalavrasErradas)}">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Palavras que você errou</h3>
+   </div>
+   <div class="panel-body">
+    <form th:action="@{/praticar/erradas}" method="get">
+     <div class="form-group col-md-8">
+      <label for="idioma">Idioma</label> <select id="idioma" class="form-control" name="idiomaE">
+       <option th:each="i : ${idiomasPalavrasErradas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+      </select>
+     </div>
+     <div class="form-group col-md-2" style="margin-top: 30px;">
+      <label for="et">Exibir Tradução</label> <input type="checkbox" id="et" name="exibirTraducao" checked="checked" />
+     </div>
+     <div class="col-md-2">
+      <button th:if="${possuiPalavras}" class="btn btn-purple" style="margin-top: 24px;">Praticar</button>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+
+ <!-- PALAVRAS POR CATEGORIA -->
+
+ <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Categoria especifica</h3>
+   </div>
+   <div class="panel-body">
+    <form th:action="@{/praticar/porCategorias}" method="get">
+
+     <div class="form-group col-md-4">
+      <label for="idioma">Idioma</label> <select id="idiomaC" class="form-control" onchange="carregarCategoria()" name="idiomaC">
+       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+      </select>
+     </div>
+     <div class="form-group col-md-4">
+      <label for="idioma">Categoria</label> <select id="categoria" class="form-control" name="categoria">
+      </select>
+     </div>
+     <div class="form-group col-md-2" style="margin-top: 30px;">
+      <label for="et">Exibir Tradução</label> <input type="checkbox" id="et" name="exibirTraducao" checked="checked" />
+     </div>
+     <div class="col-md-2">
+      <button th:if="${possuiPalavras}" class="btn btn-purple" style="margin-top: 24px;">Praticar</button>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+
+ <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Palavras aleatórias</h3>
+   </div>
+   <div class="panel-body">
+    <form th:action="@{/praticar/porQuantidadePalavras}" method="get">
+     <div class="form-group col-md-6">
+      <label for="idioma">Idioma</label> 
+      <select id="idioma" class="form-control" name="idiomaQ">
+       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+      </select>
+      <p class="help-block">
+       Use a opção <strong>Total de palavras</strong> para definir a quantidade de palavras que serão praticadas.
+      </p>
+     </div>
+     <div class="form-group col-md-2">
+      <label for="idioma">Total de palavras</label> <input class="form-control" type="number" name="totalPalavras" value="0" min="1" required="required"/>
+     </div>
+     <div class="form-group col-md-2" style="margin-top: 30px;">
+      <label for="et">Exibir Tradução</label> <input type="checkbox" id="et" name="exibirTraducao" checked="checked" />
+     </div>
+     <div class="col-md-2">
+      <button th:if="${possuiPalavras}" class="btn btn-purple" style="margin-top: 24px;">Praticar</button>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+
+
+</section>
+<section layout:fragment="js">
+ <script type="text/javascript" th:src="@{/js/praticar.js}"></script>
+</section>
+</html>

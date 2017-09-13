@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layoutPadrao">
+
+<section layout:fragment="content">
+
+<input type="hidden" id="data-list" th:attr="data-list=@{/idiomas/list}"/>
+<input type="hidden" id="data-remove" th:attr="data-remove=@{/idiomas/remover}"/>
+<input type="hidden" id="data-save" th:attr="data-save=@{/idiomas/salvar}"/>
+<input type="hidden" id="data-update" th:attr="data-update=@{/idiomas/updateIdiomasList}"/>
+<input type="hidden" id="data-valida-idioma" th:attr="data-valida-idioma=@{/idiomas/validaIdioma}"/>
+
+<div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>Meus Idiomas <small>Selecione os idiomas que você irá praticar</small></h3>
+   </div>
+   <div class="panel-body">
+    <form th:action="@{/idiomas/salvar}" th:object="${idiomaUsuario}" method="post">
+    
+     <div class="row">
+      <div class="col-md-8">
+       <div  id="prefetch" class="form-group">
+        <label for="idioma">Idioma</label> 
+        <input class="typeahead form-control" type="text" id="idioma" placeholder="Digite 3 letras do idioma para autocompletar" th:field="*{idioma.idioma}"/>
+       </div>
+      </div>
+
+      <div class="col-md-4">
+       <button type="button" class="btn btn-purple" style="margin-top: 24px;" onclick="salvarIdioma()">
+        <span>Adicionar</span>
+       </button>
+      </div>
+     </div>
+    </form>
+
+    <div class="table-responsive">
+     <table id="meusIdiomas" class="table table-bordered js-datatable" style="width: 99%">
+      <thead>
+       <tr>
+        <td class="text-center col-md-1">#</td>
+        <td class="text-center col-md-10">Idioma</td>
+        <td class="text-center col-md-1">Palavras</td>
+        <td class="text-center col-md-1">Remover</td>
+       </tr>
+      </thead>
+     </table>
+    </div>
+
+
+<!--     <table id="meusIdiomas2" class="table table-bordered js-datatable" style="width: 99%"> -->
+<!--      <thead> -->
+<!--       <tr> -->
+<!--        <th>Idioma</th> -->
+<!--        <th>Palavras</th> -->
+<!--        <th>Edit</th> -->
+<!--       </tr> -->
+<!--      </thead> -->
+<!--     </table> -->
+
+   </div>
+  </div>
+ </div>
+
+</section>
+
+<section layout:fragment="js">
+ <script type="text/javascript" th:src="@{/js/idiomas.js}"></script>
+</section>
+
+</html>

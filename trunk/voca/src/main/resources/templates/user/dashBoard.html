@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutPadrao">
+
+ <section layout:fragment="content">
+ <h1 style="text-align: center;">Olá <span style="color:#765acc" th:text="${u.getNome().concat('!')}"></span> Seja Bem-vindo(a)</h1>
+ <br/>
+  <div class="col-md-4">
+	 <div class="panel panel-purple" style="border-color: #d0d0d0;">
+	 <div class="panel-heading">Palavras e Expressões Aprendidas</div>
+	  <div class="panel-body">
+	  	<span class="glyphicon glyphicon-education" style="font-size: 120px;color:#56cbde" aria-hidden="true"></span>
+	  	<span style="font-size: 80px;float: right;margin-right: 180px;color:#56cbde" th:text="${totalPalavras}"></span>
+	  </div>
+	  <div class="panel-footer"><a th:href="@{/palavras}" style="cursor: pointer;">Aprender Novas Palavras</a></div>
+	 </div>
+  </div>
+  <div class="col-md-4">
+	 <div class="panel panel-purple" style="border-color: #d0d0d0;">
+	 <div class="panel-heading">Idiomas</div>
+	  <div class="panel-body">
+	  <span class="glyphicon glyphicon-globe" style="font-size: 120px;color:#4cb6f5" aria-hidden="true"></span>
+	  	<span style="font-size: 80px;float: right;margin-right: 180px;color:#4cb6f5" th:text="${totalIdiomas}"></span>
+	  </div>
+	  <div class="panel-footer"><a th:href="@{/idiomas}" style="cursor: pointer;">Incluir um Idioma</a></div>
+	 </div>
+  </div>
+  <div class="col-md-4">
+	 <div class="panel panel-purple" style="border-color: #d0d0d0;">
+	 <div class="panel-heading">Percentual de Acertos</div>
+	  <div class="panel-body">
+	  <span class="glyphicon glyphicon-ok" aria-hidden="true" th:style="'font-size: 120px;color:' + ${stylePercent}"></span>
+	  	<span th:style="'font-size: 80px;float: right;margin-right: 80px;color:' + ${stylePercent}" th:text="${percentualAcerto} + '%'"></span>
+	  </div>
+	  <div class="panel-footer"><a th:href="@{/praticar}" style="cursor: pointer;">Praticar</a></div>
+	 </div>
+  </div>
+
+	<div class="col-md-4"></div>
+	<div class="col-md-4">
+		<img alt="" th:src="@{/img/logo.png}" style="width: 60%;margin-top: 10px;margin-left: 20%"></img>
+	</div>
+	<div class="col-md-4"></div>
+</section>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutClean">
+
+ <section layout:fragment="content">
+ <form th:action="@{/login}" method="get">
+	 <div style="display: inline;">
+	 	<img alt="" th:src="@{/img/logo.png}" style="width: 25%;margin-left: 100px;margin-top: 70px;"></img>
+	 </div>
+	 <div style="display: inline-grid;">
+	 	<span style="font-size:68px">Bem-vindo ao <span style="color:#765acc">Voka!</span></span>
+	 	<span style="font-size:28px;margin-left: 150px">Seu ajudante no aprendizado</span>
+	 	<button style="margin-left: 270px; width: 20%;margin-top:20px" class="btn btn-purple">
+	 	<span>Entre Agora</span>
+	 	</button>
+	 </div>
+ </form>
+</section>
+</html>

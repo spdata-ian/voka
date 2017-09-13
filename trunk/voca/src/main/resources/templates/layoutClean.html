@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>Voca! Seu vocabulário online</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width"/>
+
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/datepicker.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-datatable.css}" />
+<link rel="stylesheet" th:href="@{/css/dataTables.css}" />
+</head>
+<body>
+
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+
+   <div class="navbar-header">
+    </div>
+   
+		</div>
+	</nav>
+	<div class="container-fluid">
+    
+    <div id="messagem" class="alert alert-warning" role="alert" style="display:none">
+      <strong id="sumary"></strong><span id="text" style="margin-left: 5px"></span>
+    </div>
+ 
+	<section layout:fragment="content">
+		<p>Page content goes here</p>
+	</section>
+	</div>
+	<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/datepicker.js}"></script>
+	<script type="text/javascript" th:src="@{/js/datepicker-locale.js}"></script>
+	<script type="text/javascript" th:src="@{/js/geral.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/locales/bootstrap-datetimepicker.pt-BR.js}"></script>
+	<script type="text/javascript" th:src="@{/js/mask.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-datatable.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-datatable.js}"></script>
+ 
+ <section layout:fragment="js">
+ 
+ </section>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layoutClean">
+
+<section layout:fragment="content">
+<div class="col-md-6 ">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	  	<h4>Faça seu login</h4>
+	  </div>
+		<div class="panel-body">
+    <form th:action="@{/login}" method="POST" class="form-signin">
+            <div th:if="${param.error}" class="alert alert-warning" role="alert">
+             <strong id="sumary">Tente Novamente</strong><span id="text" style="margin-left: 5px">E-mail ou Senha estão incorretos</span>
+            </div>
+			<div class="form-group">
+				<label for="email">E-mail</label>
+				<input type="email" name="email" class="form-control" id="email" placeholder="E-mail" autocomplete="off" autofocus="autofocus"/>
+			</div>
+			<div class="form-group">
+				<label for="senha">Senha</label>
+				<input type="password" name="password" class="form-control" id="senha" placeholder="Senha" autocomplete="off"/>
+				<a class="help-block" style="float: right;cursor: pointer;">Recuperar Senha</a>
+			</div>
+			<div class="col-md-12">
+				<button class="btn btn-purple" style="width: 100%" name="Submit" type="Submit">Acessar</button>
+			</div>
+   </form>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-6 ">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	  	<h4>Registre-se</h4>
+	  </div>
+		<div class="panel-body">
+         <form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" role="form">
+         
+         <div class="alert alert-success alert-dismissible" role="alert" th:if="${erroRegistro != null and !erroRegistro}">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+           <span aria-hidden="true">&times;</span>
+          </button>
+             <strong id="sumary">Yeah!</strong><span id="text" style="margin-left: 5px">Registro feito com sucesso! Faça seu login!</span>
+         </div>
+       
+         <div class="alert alert-danger alert-dismissible" role="alert" th:if="${erroRegistro!= null and erroRegistro}">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+           <span aria-hidden="true">&times;</span>
+          </button>
+          <div th:each="e : ${erros}">
+             <strong id="sumary">Ops...</strong><span id="text" style="margin-left: 5px" th:text="${e}"></span>
+          </div>
+         </div>
+         
+         	<div class="form-group">
+				<label for="nome">Nome</label>
+				<input type="text" class="form-control" id="nome" placeholder="Nome" autocomplete="off" autofocus="autofocus" th:field="*{nome}"/>
+			</div>
+			<div class="form-group">
+				<label for="email">E-mail</label>
+				<input type="email" class="form-control" id="email" placeholder="E-mail" autocomplete="off" th:field="*{email}"/>
+				<p class="help-block">O seu e-mail será usado para acessar o sistema</p>
+			</div>
+			<div class="form-group">
+				<label for="senha">Senha</label>
+				<input type="password" class="form-control" id="senha" placeholder="Senha" autocomplete="off" th:field="*{senha}"/>
+			</div>
+			<div class="form-group">
+				<label for="idioma">Qual Idioma você vai praticar?</label>
+                <select class="form-control" id="idioma" th:field="*{idioma}">
+                 <option value=""></option>
+                 <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.idioma}"></option>
+                </select>
+				<p class="help-block">Você pode adicionar mais idiomas depois :)</p>
+			</div>
+			<div class="col-md-12">
+				<button class="btn btn-purple" style="width: 100%" type="submit">Registrar</button>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
+</section>
+</html>
