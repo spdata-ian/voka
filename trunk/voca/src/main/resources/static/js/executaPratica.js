@@ -2,6 +2,7 @@ var dataSom;
 var dataFinalizar;
 var dataPraticar;
 var dataOuvir;
+var dataSomFinalizar;
 var palavras = [];
 var countPalavra = 0;
 var countAcertos = 0;
@@ -14,6 +15,7 @@ $(document)
 					dataFinalizar = $("#dataFinalizar").attr("data-finalizar")
 					dataPraticar = $("#dataPraticar").attr("data-praticar")
 					dataOuvir = $("#dataOuvir").attr("data-ouvir")
+					dataSomFinalizar = $("#dataSomFinalizar").attr("data-som-finalizar")
 					var validacao = true;
 					var next = $("#verificar");
 					$('#rootwizard')
@@ -104,11 +106,7 @@ $(document)
 											$("input[id$=" + tabId + "]").attr(
 													"autofocus", "autofocus");
 											if (tabId == "-1") {
-												// $("#totalPalavras").html(countPalavra);
-												// $("#totalAcertos").html(countAcertos);
-												// $("#totalErros").html(countPalavra
-												// - countAcertos);
-												// code before the pause
+												somFinalizar();
 												setTimeout(function() {
 													showChart();
 												}, 100);
@@ -155,6 +153,22 @@ function somAcerto(resultado) {
 
 	playSoud(c);
 
+}
+
+function somFinalizar(){
+	ion.sound({
+		sounds : [ {
+			name : "finalizar"
+		} ],
+
+		// main config
+		path : dataSomFinalizar+"?",
+		preload : true,
+		multiplay : true,
+		volume : 0.4
+	});
+
+	playSoud("finalizar");
 }
 
 function validar(e) {

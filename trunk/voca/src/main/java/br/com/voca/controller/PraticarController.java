@@ -141,10 +141,16 @@ public class PraticarController {
 	@ResponseBody
 	public byte[] som(@RequestParam("acerto") final Boolean acertou) throws Exception {
 		if (acertou) {
-			return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/certo.mp3"));
+			return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/certo2.mp3"));
 		} else {
 			return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/errado.mp3"));
 		}
+	}
+
+	@RequestMapping(value = "somFinalizar", method = RequestMethod.GET, produces = "audio/mpeg")
+	@ResponseBody
+	public byte[] somFinalizar() throws Exception {
+		return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/final.mp3"));
 	}
 
 	/**
