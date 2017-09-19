@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,13 +137,13 @@ public class PraticarController {
 	 * @param exibirTraducao
 	 * @return
 	 */
-	@RequestMapping(value = "som", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "som", method = RequestMethod.GET, produces = "audio/mpeg")
 	@ResponseBody
-	public String som(@RequestParam("acerto") final Boolean acertou) throws Exception {
+	public byte[] som(@RequestParam("acerto") final Boolean acertou) throws Exception {
 		if (acertou) {
-			return Base64.encodeBase64String(IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/certo.mp3")));
+			return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/certo.mp3"));
 		} else {
-			return Base64.encodeBase64String(IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/errado.mp3")));
+			return IOUtils.toByteArray(getClass().getResourceAsStream("/static/souds/errado.mp3"));
 		}
 	}
 
@@ -155,11 +154,28 @@ public class PraticarController {
 	 * @param exibirTraducao
 	 * @return
 	 */
-	@RequestMapping(value = "ouvir", method = RequestMethod.GET, produces = "application/json")
+	// @RequestMapping(value = "ouvir", method = RequestMethod.GET, produces =
+	// "application/json")
+	// @ResponseBody
+	// public String ouvir(final String palavra, final String idioma) throws
+	// IOException {
+	// final InputStream audio =
+	// synthesiser.setLanguage(idioma).getMP3Data(palavra);
+	// return Base64.encodeBase64String(IOUtils.toByteArray(audio));
+	// }
+
+	/**
+	 * Usado na tela de executarPratica
+	 *
+	 * @param idioma
+	 * @param exibirTraducao
+	 * @return
+	 */
+	@RequestMapping(value = "novoOuvir", method = RequestMethod.GET, produces = "audio/mpeg")
 	@ResponseBody
-	public String ouvir(final String palavra, final String idioma) throws IOException {
-		final InputStream audio = synthesiser.setLanguage(idioma).getMP3Data(palavra);
-		return Base64.encodeBase64String(IOUtils.toByteArray(audio));
+	public byte[] novoOuvir(@RequestParam("l") final String language, @RequestParam("w") final String word) throws IOException {
+		final InputStream audio = synthesiser.setLanguage(language).getMP3Data(word);
+		return IOUtils.toByteArray(audio);
 	}
 
 	/**

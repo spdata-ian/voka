@@ -8,10 +8,10 @@
 <input type="hidden" id="dataSom" th:attr="data-som=@{/praticar/som}"/>
 <input type="hidden" id="dataFinalizar" th:attr="data-finalizar=@{/praticar/finalizar}"/>
 <input type="hidden" id="dataPraticar" th:attr="data-praticar=@{/praticar}"/>
-<input type="hidden" id="dataOuvir" th:attr="data-ouvir=@{/praticar/ouvir}"/>
-<audio id="audio">
-<source type="audio/mp3" />
-</audio>
+<input type="hidden" id="dataOuvir" th:attr="data-ouvir=@{/praticar/novoOuvir}"/>
+<!-- <audio id="audio"> -->
+<!-- <source type="audio/mp3" /> -->
+<!-- </audio> -->
 <div class="col-sm-8 col-sm-offset-2">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -58,19 +58,10 @@
          <div class="tab-pane" id="tab-1">
 
        <h1 style="text-align: center;">Você chegou ao fim!</h1>
-       <div class="row" style="margin-top: 33px; padding-bottom: 50px;">
-        <div class="col-md-4">
-         <h4 style="text-align: center; color: #765acc;">Palavras praticadas</h4>
-         <h3 style="text-align: center; color: #765acc;" id="totalPalavras"></h3>
-        </div>
-        <div class="col-md-4">
-         <h4 style="text-align: center; color: #5fcc5a;">Acertos</h4>
-         <h3 style="text-align: center; color: #5fcc5a;" id="totalAcertos"></h3>
-        </div>
-        <div class="col-md-4">
-         <h4 style="text-align: center; color: #fd1b1b;">Erros</h4>
-         <h3 style="text-align: center; color: #fd1b1b;" id="totalErros"></h3>
-        </div>
+       
+
+       <div class="chart-container" style="position: relative; height:50vh; width:61vw">
+       <canvas id="chartP" ></canvas>
        </div>
 
       </div>
