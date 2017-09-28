@@ -36,6 +36,9 @@ public class Usuario implements Serializable {
 	@NotEmpty
 	private String senha;
 
+	@Transient
+	private String confirmarSenha;
+
 	@Column
 	@NotNull
 	@NotEmpty
@@ -105,6 +108,14 @@ public class Usuario implements Serializable {
 
 	public void setIdioma(final Idiomas idioma) {
 		this.idioma = idioma;
+	}
+
+	public String getConfirmarSenha() {
+		return confirmarSenha;
+	}
+
+	public void setConfirmarSenha(final String confirmarSenha) {
+		this.confirmarSenha = confirmarSenha;
 	}
 
 }

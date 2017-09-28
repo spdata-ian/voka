@@ -1,5 +1,6 @@
 package br.com.voca.model;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 @Entity(name = "Palavras")
 public class Palavras implements Serializable {
@@ -139,8 +141,8 @@ public class Palavras implements Serializable {
 		this.acerto = acerto;
 	}
 
-	public String getImamgeBas64() {
-		final String base64 = getImagem() != null ? Base64.encodeBase64String(getImagem()) : "";
+	public String getImamgeBas64() throws IOException {
+		final String base64 = getImagem() != null ? Base64.encodeBase64String(getImagem()) : Base64.encodeBase64String(IOUtils.toByteArray(getClass().getResourceAsStream("/static/img/semImagem.jpg")));
 		return base64;
 	}
 

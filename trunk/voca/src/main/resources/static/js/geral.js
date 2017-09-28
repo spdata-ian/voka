@@ -22,16 +22,15 @@ $(function() {
 	month_input.mask('00/0000');
 
 	var time_input = $(".js-hour");
-	// time_input.datetimepicker({
-	// format: 'HH:ii p',
-	// autoclose: true,
-	// // todayHighlight: true,
-	// showMeridian: true,
-	// startView: 1,
-	// maxView: 1,
-	// language: 'pt-BR'
-	// });
 	time_input.mask('00:00');
+	
+	$( document ).ajaxStart(function() {
+		blockUI();
+	});
+	
+	$( document ).ajaxComplete(function() {
+		unblockUI();
+	});
 
 })
 
@@ -62,4 +61,28 @@ function addErroMessage(sumary, text){
 	$("#text").html(text)
 	$("#messagem").addClass("alert-danger");
 	$("#messagem").show();
+}
+
+function addGrowl(summary, text, type){
+	$.notify("<strong>"+summary+"</strong> "+text, {
+		animate: {
+			enter: 'animated bounceInDown',
+			exit: 'animated bounceOutUp'
+		},
+		type: type,
+	});
+}
+
+function blockUI(){
+	$.blockUI({ 
+        message: $('#displayBox'), 
+        css: { 
+        	 backgroundColor: 'transparent',
+        	 border: 'none'
+        } 
+    });
+}
+
+function unblockUI(){
+	$.unblockUI();
 }

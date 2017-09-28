@@ -20,7 +20,7 @@ public class RestGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	ResponseEntity<?> handleControllerException(final HttpServletRequest request, final Throwable ex) {
 
 		final HttpStatus status = getStatus(request);
-		return new ResponseEntity("Limite para imagem é de 100Kb", status);
+		return new ResponseEntity("Limite para imagem é de 300kb", status);
 
 		// example
 		// return new ResponseEntity("success", responseHeaders, HttpStatus.OK);

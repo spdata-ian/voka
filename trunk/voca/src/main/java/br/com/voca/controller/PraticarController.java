@@ -118,9 +118,9 @@ public class PraticarController {
 	 * @return
 	 */
 	@RequestMapping(value = "porQuantidadePalavras", method = RequestMethod.GET)
-	public ModelAndView prepararPraticarQuantidadePalavras(@RequestParam("idiomaQ") final Idiomas idioma, @RequestParam("totalPalavras") final Integer totalPalavras, final Boolean exibirTraducao) {
+	public ModelAndView prepararPraticarQuantidadePalavras(@RequestParam("idiomaQ") final Idiomas idioma, @RequestParam("totalPalavras") final Integer totalPalavras, @RequestParam("categoria") final Categorias categoria, final Boolean exibirTraducao) {
 		final ModelAndView mv = new ModelAndView("user/executaPratica");
-		final List<Palavras> palavras = palavrasRepo.findByIdiomaAndUsuario(idioma, usuarioService.getUsuarioDefault());
+		final List<Palavras> palavras = palavrasRepo.findByIdiomaAndUsuarioAndCategoria(idioma, usuarioService.getUsuarioDefault(), categoria);
 		Collections.shuffle(palavras);
 		final int q = totalPalavras > palavras.size() ? palavras.size() : totalPalavras;
 		mv.addObject("palavras", palavras.subList(0, q));

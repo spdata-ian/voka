@@ -5,6 +5,7 @@
 	layout:decorator="layoutClean">
 
 <section layout:fragment="content">
+<input type="hidden" id="recuperar" th:attr="data-recuperar=@{/recuperar}"/>
 <div class="col-md-6 ">
 	<div class="panel panel-default">
 	  <div class="panel-heading">
@@ -22,7 +23,7 @@
 			<div class="form-group">
 				<label for="senha">Senha</label>
 				<input type="password" name="password" class="form-control" id="senha" placeholder="Senha" autocomplete="off"/>
-				<a class="help-block" style="float: right;cursor: pointer;">Recuperar Senha</a>
+				<a class="help-block" style="float: right;cursor: pointer;" data-toggle="modal" data-target="#myModal">Recuperar Senha</a>
 			</div>
 			<div class="col-md-12">
 				<button class="btn btn-purple" style="width: 100%" name="Submit" type="Submit">Acessar</button>
@@ -58,16 +59,20 @@
          
          	<div class="form-group">
 				<label for="nome">Nome</label>
-				<input type="text" class="form-control" id="nome" placeholder="Nome" autocomplete="off" autofocus="autofocus" th:field="*{nome}"/>
+				<input type="text" class="form-control" id="nome" placeholder="Nome" autocomplete="off" autofocus="autofocus" th:field="*{nome}" required="required"/>
 			</div>
 			<div class="form-group">
 				<label for="email">E-mail</label>
-				<input type="email" class="form-control" id="email" placeholder="E-mail" autocomplete="off" th:field="*{email}"/>
+				<input type="email" class="form-control" id="email" placeholder="E-mail" autocomplete="off" th:field="*{email}" required="required"/>
 				<p class="help-block">O seu e-mail será usado para acessar o sistema</p>
 			</div>
 			<div class="form-group">
 				<label for="senha">Senha</label>
-				<input type="password" class="form-control" id="senha" placeholder="Senha" autocomplete="off" th:field="*{senha}"/>
+				<input type="password" class="form-control" id="senhaRegisto" placeholder="Senha" autocomplete="off" th:field="*{senha}" required="required"/>
+			</div>
+			<div class="form-group">
+				<label for="confirmarSenha">Confirmar Senha</label>
+				<input type="password" class="form-control" id="confirmarSenhaRegistro" placeholder="Confirmar Senha" autocomplete="off" th:field="*{confirmarSenha}" required="required"/>
 			</div>
 			<div class="form-group">
 				<label for="idioma">Qual Idioma você vai praticar?</label>
@@ -84,5 +89,81 @@
 		</div>
 	</div>
 </div>
+
+
+
+<form id="formRecuperar">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Recuperar Senha</h4>
+      </div>
+      <div class="modal-body">
+       <div class="form-group">
+        <label>E-mail</label>
+        <input id="emailRecuperar" class="form-control" placeholder="E-mail" type="email" required="required"/>
+       </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-purple">Recuperar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
 </section>
+<section layout:fragment="js">
+
+<script type="text/javascript">
+var password = document.getElementById("senhaRegisto")
+, confirm_password = document.getElementById("confirmarSenhaRegistro");
+
+function validatePassword(){
+if(password.value != confirm_password.value) {
+  confirm_password.setCustomValidity("As senhas não são iguais");
+} else {
+  confirm_password.setCustomValidity('');
+}
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+
+	$(document).ready(function() {
+		$("#formRecuperar").submit(function(e) {
+			e.preventDefault();
+			var recuperar = $("#recuperar").attr("data-recuperar");
+			$.ajax({
+				url : recuperar,
+				type : 'GET',
+				data : {
+					email : $("#emailRecuperar").val()
+				},
+				statusCode : {
+					200 : function(xhr) {
+						if(xhr){
+							addGrowl("Senha recuperada!", "Sua nova senha foi enviada para seu e-mail", "success")
+						}else{
+							addGrowl("Ops...", "Nenhum usuário encontrado com o e-mail " + $("#emailRecuperar").val(), "danger")
+						}
+						$("#myModal").modal('hide')
+					},
+					500 : function() {
+						addGrowl("Ops...", "Ocorreu algum erro", "danger");
+						$("#myModal").modal('hide')
+					}
+				}
+			});
+
+		});
+	})
+</script>
+
+</section>
+
 </html>

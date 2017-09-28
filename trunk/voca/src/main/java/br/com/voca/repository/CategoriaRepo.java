@@ -23,4 +23,7 @@ public interface CategoriaRepo extends JpaRepository<Categorias, Integer> {
 
 	public Categorias findByCategoria(String categoria);
 
+	@Query("select new br.com.voca.model.Categorias(p.categoria.categoria, count(p) as c) from Palavras p where p.usuario = :usuario group by p.categoria order by c desc")
+	public List<Categorias> findTotalCategoriasAndPalavrasByUsuario(@Param("usuario") Usuario usuario);
+
 }

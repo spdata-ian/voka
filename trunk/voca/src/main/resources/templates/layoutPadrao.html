@@ -17,9 +17,11 @@
 <link rel="stylesheet" th:href="@{/css/bootstrap-datatable.css}" />
 <link rel="stylesheet" th:href="@{/css/dataTables.css}" />
 <link rel="stylesheet" th:href="@{/css/prettify.css}" />
+<link rel="stylesheet" th:href="@{/css/animate.css}" />
 </head>
 <body>
 
+    <img id="displayBox" th:src="@{/img/load3.gif}" style="display: none;    width: 200px;"/>
 
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
@@ -40,7 +42,7 @@
         <li><a th:href="@{/palavras}" style="color: white;font-size: 20px">Palavras</a></li>
         <li><a th:href="@{/idiomas}" style="color: white;font-size: 20px">Idiomas</a></li>
         <li><a th:href="@{/praticar}" style="color: white;font-size: 20px">Praticar</a></li>
-        <li><a href="#" style="color: white;font-size: 20px">Sua Conta</a></li>
+        <li><a th:href="@{/minhaConta}" style="color: white;font-size: 20px">Minha Conta</a></li>
       </ul>
       <p class="navbar-text navbar-right" style="color:white">Acessando como: <a th:href="@{/logout}" style="color:white" class="navbar-link" th:text="${#authentication.getPrincipal().getUsername().concat(' | Sair')}">Mark Otto</a></p>
       </div>
@@ -64,9 +66,6 @@
 	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
 
-<!-- Voka -->
-	
-    <script type="text/javascript" th:src="@{/js/geral.js}"></script>
 
 <!-- Datepicker e Mask -->
 	<script type="text/javascript" th:src="@{/js/datepicker.js}"></script>
@@ -98,7 +97,18 @@
 	<script type="text/javascript" th:src="@{/js/moment.js}"></script>
 	<script type="text/javascript" th:src="@{/js/pieceLabel.js}"></script>
 
+
+<!-- Notify -->
+	<script type="text/javascript" th:src="@{/js/bootstrap-notify.js}"></script>
+
+
+<!-- Block UI -->
+	<script type="text/javascript" th:src="@{/js/block.js}"></script>
+
  
+<!-- Voka -->
+ 
+    <script type="text/javascript" th:src="@{/js/geral.js}"></script>
  
  
  <section layout:fragment="js">

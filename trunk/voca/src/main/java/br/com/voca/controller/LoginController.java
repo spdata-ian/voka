@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
@@ -85,6 +87,12 @@ public class LoginController {
 
 		}
 		return modelAndView;
+	}
+
+	@RequestMapping(value = "/recuperar", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public boolean recuperarSenha(@RequestParam("email") final String email) {
+		return userService.recuperarSenha(email);
 	}
 
 	@ModelAttribute("idiomas")

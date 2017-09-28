@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layoutPadrao">
+
+<section layout:fragment="content">
+
+<input type="hidden" id="alterarSenhaUrl" th:attr="data-alterar-senha=@{minhaConta/alterarSenha}" />
+<input type="hidden" id="alterar" th:attr="data-alterar=@{minhaConta/alterar}" />
+<input type="hidden" id="remover" th:attr="data-remover=@{minhaConta/remover}" />
+<input type="hidden" id="logout" th:attr="data-logout=@{/logout}" />
+ <div class="col-md-8 col-md-offset-2">
+  <div class="panel panel-default">
+   <div class="panel-heading">
+    <h3>
+     Minha Conta <small></small>
+    </h3>
+   </div>
+   <div class="panel-body">
+     <form id="form" th:object="${usuario}">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Nome" th:field="*{nome}" required="required"/>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" class="form-control" id="email" placeholder="E-mail" th:field="*{email}" required="required"/>
+        </div>
+     <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-10">
+<!--        <button class="btn btn-info" type="button" style="margin-left: 10px;margin-top: 10px;width: 124px;" id="enviarEmail">Enviar E-mail</button> -->
+       <button class="btn btn-primary" type="button" style="margin-left: 10px;margin-top: 10px;width: 124px;" data-toggle="modal" data-target="#myModal">Alterar Senha</button>
+       <button class="btn btn-purple"  style="margin-left: 10px; margin-top: 10px;width: 124px;">Salvar</button>
+       <button class="btn btn-danger" type="button" style="margin-left: 10px; margin-top: 10px;width: 124px;"  data-toggle="modal" data-target="#modalRemoverConta">Remover Conta</button>
+      </div>
+     </div>
+        <div class="form-group">
+         <label>Idiomas e palavras</label>
+         <ul class="list-group">
+          <li th:each="i : ${idiomas}" class="list-group-item">
+           <img th:src="@{${'/img/flags/' + i.id + '.png'}}" class="img-thumbnail" style="width: 35px; height: 25px;" />         
+            <span th:text="${i.idioma}" ></span>
+            <span class="badge" th:text="${i.count}"></span>
+          </li>
+         </ul>
+       </div>
+
+        <div class="form-group">
+         <label>Categorias</label>
+         <ul class="list-group">
+          <li th:each="c : ${categorias}" class="list-group-item">
+            <span th:text="${c.categoria}" ></span>
+            <span class="badge" th:text="${c.count}"></span>
+          </li>
+         </ul>
+       </div>
+
+
+    </form>
+   </div>
+  </div>
+ </div>
+
+
+
+<!-- Modal -->
+<form id="alterarSenhaForm">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Alterar Senha</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="novaSenha">Nova Senha</label>
+          <input type="password" class="form-control" id="novaSenha" required="required"/>
+        </div>
+        <div class="form-group">
+          <label for="confirmarSenha">Confirmar Senha</label>
+          <input type="password" class="form-control" id="confirmarSenha" required="required"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-purple" id="alterarSenha">Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+
+<!-- Modal Remover Conta -->
+<div class="modal fade" id="modalRemoverConta" tabindex="-1" role="dialog" aria-labelledby="modalRemoverContaLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalRemoverContaLabel">Remover Conta</h4>
+      </div>
+      <div class="modal-body">
+       <h5>Deseja remover a conta? Esta ação não poderá ser desfeita</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-danger" id="removerConta">Remover</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</section>
+<section layout:fragment="js">
+
+<script type="text/javascript">
+var password = document.getElementById("novaSenha")
+, confirm_password = document.getElementById("confirmarSenha");
+
+function validatePassword(){
+if(password.value != confirm_password.value) {
+  confirm_password.setCustomValidity("As senhas não são iguais");
+} else {
+  confirm_password.setCustomValidity('');
+}
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+
+$(document).ready(function(){
+	$("#alterarSenhaForm").submit(function(e){
+        e.preventDefault();
+        var alterarSenhaUrl = $("#alterarSenhaUrl").attr("data-alterar-senha");
+    	$.ajax({
+    		url : alterarSenhaUrl,
+    		type : 'POST',
+    		data : {
+    			novaSenha : password.value
+    		},
+    		statusCode : {
+    			200 : function(xhr) {
+    				$("#myModal").modal('hide')
+    				$.notify("Sua senha foi alterada", {
+    					animate: {
+    						enter: 'animated bounceInDown',
+    						exit: 'animated bounceOutUp'
+    					},
+    					type: 'success',
+    				});
+    			}
+    		}
+    	});
+    });
+
+	$("#form").submit(function(e){
+        e.preventDefault();
+        var alterar = $("#alterar").attr("data-alterar");
+    	$.ajax({
+    		url : alterar,
+    		type : 'POST',
+    		data : {
+    			nome : $("#nome").val(),
+    			email: $("#email").val()
+    		},
+    		statusCode : {
+    			200 : function(xhr) {
+    				if(xhr){
+    					addGrowl("","Seus dados foram alterados!", "success")
+    				}else{
+    					addGrowl("Ops...","Já existe um usuário cadastro com este e-mail!", "danger")
+    				}
+    				
+    			},
+    			500: function(){
+    					addGrowl("Ops...","Ocorreu algum erro", "danger")
+    			}
+    		}
+    	});
+    });
+	
+	$("#removerConta").click(function(){
+        var remover = $("#remover").attr("data-remover");
+    	$.ajax({
+    		url : remover,
+    		type : 'POST',
+    		statusCode : {
+    			200 : function(xhr) {
+    				window.location.replace($("#logout").attr("data-logout"))
+    			},
+    			500: function(){
+    					addGrowl("Ops...","Ocorreu algum erro", "danger")
+    			}
+    		}
+    	});
+	})
+
+// 	$("#enviarEmail").click(function(){
+//     	$.ajax({
+//     		url : "/minhaConta/enviar",
+//     		type : 'get',
+//     		statusCode : {
+//     			200 : function(xhr) {
+//     				console.log('asda')
+//     			}
+//     			}
+//     	});
+// 	})
+})
+
+</script>
+
+</section>
+</html>

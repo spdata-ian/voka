@@ -83,10 +83,10 @@ function removerIdioma(id) {
 			200 : function(xhr) {
 				updateIdiomasList();
 				reloadDataTable();
-				addSucsessMessage("Yeah!", "Idioma removido")
+				addGrowl("Yeah","Idioma removido", "success")
 			},
 			500 : function(xhr) {
-				addErroMessage("Ops!", "Alguma coisa deu errado")
+				addGrowl("Ops!", "Alguma coisa deu errado", "danger")
 			}
 		}
 	});
@@ -112,11 +112,11 @@ function salvarIdioma() {
 			200 : function(xhr) {
 				updateIdiomasList();
 				reloadDataTable();
-				addSucsessMessage("Yeah!", "Novo idioma adicionado")
+				addGrowl("Yeah","Novo idioma adicionado", "success")
 				$("#idioma").val("");
 			},
 			500 : function(xhr) {
-				addErroMessage("Ops!", "Alguma coisa deu errado")
+				addGrowl("Ops!", "Alguma coisa deu errado", "danger")
 				$("#idioma").val("");
 			}
 		}

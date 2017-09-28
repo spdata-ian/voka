@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity(name = "Categorias")
@@ -22,7 +23,15 @@ public class Categorias implements Serializable {
 	@NotNull
 	private String categoria;
 
+	@Transient
+	private Long count;
+
 	public Categorias() {
+	}
+
+	public Categorias(final String categoria, final Long count) {
+		this.categoria = categoria;
+		this.count = count;
 	}
 
 	public Categorias(final String string) {
@@ -43,6 +52,14 @@ public class Categorias implements Serializable {
 
 	public void setCategoria(final String categoria) {
 		this.categoria = categoria;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(final Long count) {
+		this.count = count;
 	}
 
 }

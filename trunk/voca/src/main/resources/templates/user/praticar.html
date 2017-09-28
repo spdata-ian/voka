@@ -76,11 +76,11 @@
 
      <div class="form-group col-md-4">
       <label for="idioma">Idioma</label> <select id="idiomaC" class="form-control" onchange="carregarCategoria()" name="idiomaC">
-       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdioma()}"></option>
       </select>
      </div>
      <div class="form-group col-md-4">
-      <label for="idioma">Categoria</label> <select id="categoria" class="form-control" name="categoria">
+      <label for="categoria">Categoria</label> <select id="categoria" class="form-control" name="categoria">
       </select>
      </div>
      <div class="form-group col-md-2" style="margin-top: 30px;">
@@ -101,14 +101,18 @@
    </div>
    <div class="panel-body">
     <form th:action="@{/praticar/porQuantidadePalavras}" method="get">
-     <div class="form-group col-md-6">
+     <div class="form-group col-md-4">
       <label for="idioma">Idioma</label> 
-      <select id="idioma" class="form-control" name="idiomaQ">
-       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdiomaComCount()}"></option>
+      <select id="idiomaAlea" class="form-control" name="idiomaQ" onchange="carregarCategoriaPalavrasAleatorias()">
+       <option th:each="i : ${idiomas}" th:value="${i.id}" th:text="${i.getIdioma()}"></option>
       </select>
       <p class="help-block">
        Use a opção <strong>Total de palavras</strong> para definir a quantidade de palavras que serão praticadas.
       </p>
+     </div>
+      <div class="form-group col-md-2">
+      <label for="categoriaAle">Categoria</label> <select id="categoriaAle" class="form-control" name="categoria">
+      </select>
      </div>
      <div class="form-group col-md-2">
       <label for="idioma">Total de palavras</label> <input class="form-control" type="number" name="totalPalavras" value="0" min="1" required="required"/>

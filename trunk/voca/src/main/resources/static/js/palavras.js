@@ -1,9 +1,11 @@
 var datatable;
 var dataList; 
 var dataRemove;
+var dataSalvar;
 $(document).ready(function(){
 	dataList = $("#data-list").attr("data-list");
 	dataRemove = $("#data-remove").attr("data-remove");
+	dataSalvar = $("#data-salvar").attr("data-salvar");
 	initDataTable();
 	
 	$('#minhasPalavras tbody').on( 'click', 'button.btn-danger', function () {
@@ -63,7 +65,7 @@ function fire_ajax_submit() {
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
-        url: "/palavras",
+        url: dataSalvar,
         data: data,
         //http://api.jquery.com/jQuery.ajax/
         //https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects
@@ -72,22 +74,21 @@ function fire_ajax_submit() {
         cache: false,
         timeout: 600000,
         success: function (data) {
-        	console.log(data)
         	if(data.length != 0){
         		$(data).each(function(e){
         			addErroMessage("", data[e]);
         		});
         	}else{
-				addSucsessMessage("Yeah!", "Palavra salva")
+				addGrowl("Yeah","Palavra salva", "success")
         		reloadDataTable();
 				$("#form")[0].reset();
+				$("#id").val("");
         	}
             $("#btnSubmit").prop("disabled", false);
 
         },
         error: function (e) {
-        	console.log(e)
-			addErroMessage("Ops!", e.responseText)
+        	addGrowl("Ops!", e.responseText, "danger")
             $("#btnSubmit").prop("disabled", false);
         }
     });
@@ -103,10 +104,10 @@ function removerPalavra(id) {
 		statusCode : {
 			200 : function(xhr) {
 				reloadDataTable();
-				addSucsessMessage("Yeah!","Idioma removido")
+				addGrowl("Yeah","Palavra removida", "success")
 			},
 			500 : function(xhr) {
-				addErroMessage("Ops!","Alguma coisa deu errado")
+				addGrowl("Ops!", "Alguma coisa deu errado", "danger")
 			}
 		}
 	});

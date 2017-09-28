@@ -3,6 +3,7 @@ var dataCategoria;
 $(document).ready(function(){
 	dataCategoria = $("#dataCategoria").attr("data-categoria")
 	carregarCategoria();
+	carregarCategoriaPalavrasAleatorias();
 });
 
 
@@ -25,7 +26,30 @@ function carregarCategoria(){
 				})
 				
 				
-				console.log(xhr)
+			}
+		}
+	});
+}
+
+function carregarCategoriaPalavrasAleatorias(){
+	$.ajax({
+		url : dataCategoria,
+		type : 'GET',
+		data : {
+			idioma : $("#idiomaAlea").val()
+		},
+		statusCode : {
+			200 : function(xhr) {
+				$("#categoriaAle").empty();
+				var x = document.getElementById("categoriaAle");
+				$(xhr).each(function(e){
+					var option = document.createElement("option");
+					option.value = xhr[e].id;
+					option.text = xhr[e].categoria;
+					x.add(option);
+				})
+				
+				
 			}
 		}
 	});
