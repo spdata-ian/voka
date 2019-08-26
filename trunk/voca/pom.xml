@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>voca ok pull request</name>
-	<description>outra vez</description>
+	<description>outra vez TESTE</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
