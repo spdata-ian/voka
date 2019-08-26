@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>voca ok</name>
+	<name>voca ok pull request</name>
 	<description></description>
 
 	<parent>
